@@ -21,6 +21,8 @@ import matplotlib.pyplot as plt
 #beta0 = beta0.values.flatten()
 #beta = beta.values.flatten()
 
+np.random.seed(666)
+
 # Generate randomly beta
 beta0 = np.random.normal(0.0, 1.0, 1).flatten()
 beta = sps.rand(10, 1, 1)
@@ -46,3 +48,15 @@ print(glm.beta_)
 print("")
 print(beta0)
 print(beta)
+
+# Generate test data
+# simulate testing data
+X_test = np.random.normal(0.0, 1.0, [1000, 10])
+y_test = simulate_glm("poisson", beta0, beta, X_test)
+
+# predict using fitted model on the test data
+yhat_test = glm.predict(X_test)
+
+# score the model
+deviance = glm.score(X_test, y_test)
+print(deviance)
